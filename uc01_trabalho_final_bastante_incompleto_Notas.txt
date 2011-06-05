@@ -3,23 +3,20 @@
 
 --//--
 
-Faltou fazer, no geral:
+Muito faltou fazer, apenas para o geral/essencial:
 
   1) teste com Router.MatchExecute
 
   2) estrutura de Contextos nos 12 handler's
 
   3) NamespacesContextHandler (qual o melhor metodo para obter namespace?) , AssemblyNameContextHandler
-
   4) NamespacePrefixContextHandler
-
   5) TypeShortNameNamespaceContextHandler , MethodNameTypeNamespaceContextHandler , ConstructsTypeNamespaceContextHandler
-
   6) FieldTypeNamespaceContextHandler , PropTypeNamespaceContextHandler , EventTypeNamespaceContextHandler
 
-  (7) acabar App, verificando se nao da timeout de resultados
+  (7) acabar App, verificando se nao dá timeout para resultados com conteúdos maiores (ex.: outras pastas sem ser a do NUnit)
 
-  (8) contemplar WebUtility.HtmlEncode em processTagHTML2string, ou na construcao de TagHTML?
+  (8) contemplar WebUtility.HtmlEncode em processTagHTML2string, ou na construção de TagHTML?
 
 --//--
 
@@ -37,125 +34,127 @@ Faltou fazer, no geral:
       - constante ns na 2a posicao da List<RuleComponent>
       - vari�vel {namespacePrefix} 3a posicao da List<RuleComponent>
 
-    A seguir, � colocado no dicionario, juntamente com o handler respectivo... para cada template, s� existe um handler
+    A seguir, é colocado no dicionário, juntamente com o handler respectivo... para cada template, só existe um handler
 
   * Existem 3 Classes: abstract RuleComponent, RuleVariable, RuleConstant, sendo que as 2 ultimas derivam da 1a classe.
-      A diferen�a principal entre RuleVariable e RuleConstant est� no m�todo MatchString(string s)
-        onde uma vari�vel faz Match com qualquer string, enquanto que RuleConstant tem de ter conte�do igual a s
+      A diferença principal entre RuleVariable e RuleConstant está no método MatchString(string s)
+        onde uma variável faz Match com qualquer string, enquanto que RuleConstant tem de ter conteúdo igual a s
 
-  * Existem 2 M�todos Construtores de Contracts, um sem par�metros e outro para se poderem redefinir 5 campos private;
+  * Existem 2 Métodos Construtores de Contracts, um sem parâmetros e outro para se poderem redefinir 5 campos private;
 
-  * O m�todo auxiliar IsVariable(string s) verifica se s � vari�vel, com base nos 5 campos private de Contracts
+  * O método auxiliar IsVariable(string s) verifica se s é variável, com base nos 5 campos private de Contracts
 
-  * O m�todo auxiliar CheckForCollectionsBothNullsOrWithSameCount(ICollection col1, ICollection col2) compara se 2
-      colec��es s�o ambas null ou t�m igual .Count , para auxiliar outros m�todos
+  * O método auxiliar CheckForCollectionsBothNullsOrWithSameCount(ICollection col1, ICollection col2) compara se 2
+      colecções são ambas null ou têm igual .Count , para auxiliar outros métodos
 
   * GenerateRuleComponents cria, a partir da string de template, uma lista de componentes (a ser comparada com o que
-      est� no dicion�rio atr�s referido)
+      est� no dicion�rio atrás referido)
 
-  * EqualRules verifica se 2 listas de componentes t�m o mesmo conte�do (de modo a substituir .ContainsKey do Dictionary)
+  * EqualRules verifica se 2 listas de componentes têm o mesmo conteúdo (de modo a substituir .ContainsKey do Dictionary)
 
   * RulesContains substitui a funcionalidade de .ContainsKey do Dictionary
 
-  * AddRule utiliza os 3 m�todos anteriores para adicionar um template e seu handler ao Dictionary listRulesHandlers
+  * AddRule utiliza os 3 métodos anteriores para adicionar um template e seu handler ao Dictionary listRulesHandlers
 
-  * MatchRule verifica se � poss�vel fazer match entre uma lista de componentes e uma lista de strings
+  * MatchRule verifica se é possível fazer match entre uma lista de componentes e uma lista de strings
 
   * MatchUri aceita uma expressao resultante de pedido HTTP e tenta fazer match com qualquer das regras existentes no
       Dictionary listRulesHandlers, e se conseguir esse MatchRule, devolve:
       - o respectivo template (em forma de lista de componentes);
       - o handler respectivo desse template;
-      - e a express�o concreta do pedido HTTP
+      - e a expressão concreta do pedido HTTP
 
-  * ResolveUri utiliza MatchUri, e em caso de sucesso, cria um Dictionary<string, string> com os pares (vari�vel,express�o)
-      que ser�, mais tarde, passado ao respectivo handler como par�metro de entrada
+  * ResolveUri utiliza MatchUri, e em caso de sucesso, cria um Dictionary<string, string> com os pares (variável,expressão)
+      que será, mais tarde, passado ao respectivo handler como parâmetro de entrada
 
-1.2) N�o Ficou Feito:
+1.2) Não Ficou Feito:
 
-  * Utilizar os 5 campos private de Contracts em todos os m�todos de Contracts, por forma a generalizar o c�digo
+  * Utilizar os 5 campos private de Contracts em todos os m�todos de Contracts, por forma a generalizar o código
 
-  * Alterar a estrutura interna de regras e handlers, por forma a generalizar mais o c�digo, inclusiv� no sentido de
-      permitir que um Contexto pudesse ter subdirectorias, ie, v�rios subn�veis
+  * Alterar a estrutura interna de regras e handlers, por forma a generalizar mais o código, inclusivé no sentido de
+      permitir que um Contexto pudesse ter subdirectorias, ie, vários subníveis
 
-      (Contracts_outroModo.cs foi a tentativa inicial de implementar a estrutura de �rvore)
+      (Contracts_outroModo.cs foi a tentativa inicial de implementar a estrutura de árvore)
 
 
 2)  Router.cs
 
 2.1) Ficou Feito:
 
-  * classe est�tica, cujo �nico m�todo � MatchAndExecute, que, dada uma Contracts e uma string do pedidoHTTP, tenta o
-      ResolveUri em Contracts e, em caso de sucesso, passa o dicion�rio resultante de par�metros ao handler retornado,
-      Se tal passagem n�o for poss�vel, invoca um "handler interno" para tratar/informar a causa do problema
+  * classe estática, cujo único método é MatchAndExecute, que, dada uma Contracts e uma string do pedidoHTTP, tenta o
+      ResolveUri em Contracts e, em caso de sucesso, passa o dicionário resultante de parâmetros ao handler retornado,
+      Se tal passagem não for possível, invoca um "handler interno" para tratar/informar a causa do problema
         (lista de templates nula, ou handler nulo)
 
-  * nada mais h� a fazer, pois, tal como indicado nas aulas, o router "pega na �rvore de regras" e escolhe o handler
+  * nada mais há a fazer, pois, tal como indicado nas aulas, o router "pega na árvore de regras" e escolhe o handler
       em conformidade
 
-3)  Handlers.cs --- o trabalho encontra-se bastante incompleto devido � n�o implementa��o de todo este ficheiro ---
+3)  Handlers.cs --- o trabalho encontra-se bastante incompleto devido à não implementação de todo este ficheiro ---
 
 3.1) Ficou Feito:
 
-  * Utilizou-se, como default no disco r�gido, a sub-pasta "tools" do "NUnit.2.5.10.11092", por ser exemplo de algo
-      com poucos ficheiros, mas que permitiu alguns resultados v�lidos e outros inv�lidos
+  * Utilizou-se, como default no disco rígido, a sub-pasta "tools" do "NUnit.2.5.10.11092", por ser exemplo de algo
+      com poucos ficheiros, mas que permitiu alguns resultados válidos e outros inválidos
 
-  * Utilizou-se uma constante para a ra�z (relativa) de URL, de modo a generalizar o c�digo para outros casos poss�veis
+  * Utilizou-se uma constante para a raíz (relativa) de URL, de modo a generalizar o código para outros casos possíveis
 
-  * Implementaram-se 6 m�todos auxiliares GetNamespaceFrom... , para o caso dif�cil de tratar os Namespace
+  * Implementaram-se 6 métodos auxiliares GetNamespaceFrom... , para o caso difícil de tratar os Namespace
 
-  * Existe classe base, HandlerAnswer, que corresponde � resposta de execu��o de um IHandler a um dicion�rio de par�metros
+  * Existe classe base, HandlerAnswer, que corresponde à resposta de execução de um IHandler a um dicionário de parâmetros
 
-  * Existe interface base, IHandler, que corresponde � regra para implementar os Handlers... s� tem o m�todo Handle
+  * Existe interface base, IHandler, que corresponde à regra para implementar os Handlers... só tem o método Handle
 
-  * Existe 1 excep��o definida HandlerException, com vista a capturar o contexto nos s�tios onde surgirem erros de execu��o
+  * Existe 1 excepção definida HandlerException, com vista a capturar o contexto nos sítios onde surgirem erros de execução
 
-  * Existe m�todo "interno" NullsHandler, utilizado por Router, nos casos em que:
-      - a �rvore de regras interna da aplica��o esteja a null
+  * Existe método "interno" NullsHandler, utilizado por Router, nos casos em que:
+      - a árvore de regras interna da aplicação esteja a null
       - ou o handler encontrado por Match esteja a null
 
   * 3 handlers implementados: root, contextname, e assembliescontext
 
-3.2) N�o Ficou Feito:
+3.2) Não Ficou Feito:
+
+  * a utilização da excepção que foi criad,a de propósito, para ser utilizada neste módulo
 
   * o handler assembliescontext (apenas devido ao ponto seguinte 3.3)
 
   * e os restantes 8 handlers: assemblynamecontext, namespaceprefixcontext, typeshortnamenamespacecontext,
         methodnametypenamespacecontext, constructstypenamespacecontext, fieldtypenamespacecontext, proptypenamespacecontext,
         eventypenamespacecontext
-      devido ao facto do handler anterior empregar a l�gica que, tamb�m, influenciaria a destes restantes 8 handlers
+      devido ao facto do handler anterior empregar lógica que, também, influenciaria a da implementação destes restantes 8 handlers
 
 3.3) Ficou por Esclarecer:
 
   * Verificaram-se 3 modos de obter Namespaces: Type.Namespace , Type.FullName, e Type.AssemblyQualifiedName
-      e 3 modos de carregar ficheiro Mem�ria: Assembly.LoadFrom , Assembly.LoadFile , Assembly.ReflectionOnlyLoadFrom
+      e 3 modos de carregar ficheiro Memória: Assembly.LoadFrom , Assembly.LoadFile , Assembly.ReflectionOnlyLoadFrom
 
-  * N�o se percebe as diferen�as entre eles...
+  * Não se percebe as diferen�as entre eles...
 
-  * Porventura, teria tamb�m de se utilizar Activator.CreateInstance(Type) e verificar se havia excep��o(es), e trat�-las?!
+  * Porventura, teria também de se utilizar Activator.CreateInstance(Type) e verificar se havia excepção(es), e tratá-las?!
       ( para se distinguir entre o que � N1.C1.C2 e N1.N2.C2 ?! -
-      - ver exemplo - Fully Qualified Names - em sec��o de VS 2010 help - Using Namespaces (C# Programming Guide) )
+      - ver exemplo - Fully Qualified Names - em secção de VS 2010 help - Using Namespaces (C# Programming Guide) )
 
 4)  Views.cs
 
 4.1) Ficou Feito:
 
   * Estrutura TagHTML, com campos:
-      - string de tag de in�cio ;
-      - dicion�rio de atributos-valores (a serem colocados dentro da tag de in�cio);
-      - list com as sub-tags que possam constituir conte�do da tag em quest�o;
-      - string com texto que possa constituir conte�do da tag em quest�o;
-      - string de tag de fim de bloco (que pode ser inexistente, em v�rios casos gen�ricos de HTML e XHTML puro)
+      - string de tag de início ;
+      - dicion�rio de atributos-valores (a serem colocados dentro da tag de início);
+      - list com as sub-tags que possam constituir conte�do da tag em questão;
+      - string com texto que possa constituir conteúdo da tag em questão;
+      - string de tag de fim de bloco (que pode ser inexistente, em vários casos gen�ricos de HTML e XHTML puro)
 
-  * Alguns m�todos de vers�o limitada para cria��o de estrutura TagHTML (HTML, HEAD, TITLE, BODY, H1, H3, P, TABLE,
-      TR, TD, e A nas vers�es �ncora e hiperliga��o)
+  * Alguns métodos de versão limitada para criação de estrutura TagHTML (HTML, HEAD, TITLE, BODY, H1, H3, P, TABLE,
+      TR, TD, e A nas versões âncora e hiperligação)
 
 4.2) Nao Ficou Feito:
 
   * apenas, perceber se a utilizacao do m�todo: string System.Net.WebUtility.HtmlEncode(string)
-      est� bem feita, no m�todo processTagHTML2string, ou se deveria antes ter sido utilizada nos m�todos de "constru��o"
+      está bem feita, no método processTagHTML2string, ou se deveria antes ter sido utilizada nos métodos de "construção"
       HTML, ou seja, HTML, HEAD, etc...
 
-  * m�todo(s) para adicionar mais pares (atributos,valores) a uma TagHTML
+  * método(s) para adicionar mais pares (atributos,valores) a uma TagHTML
 
   * implementar outras Tags HTML, ou outras vers�es HTML ou XHTML.
 
@@ -163,13 +162,18 @@ Faltou fazer, no geral:
 
 5.1) Ficou Feito:
 
-  * aplica��o servidora, na sua camada de topo, a funcionar
+  * aplicação servidora, na sua camada de topo, a funcionar
       (recebe pedidos no prefixo http://localhost:8080/ e envia resposta)
 
-  * extra enunciado, uma forma de encerrar "suavemente" e "remotamente" a aplica��o servidora, com uri-express�o /-
+  * extra enunciado, uma forma de encerrar "suavemente" e "remotamente" a aplicação servidora, com uri-expressão /-
 
-  * o tratamento de excep��es, relativamente a Router.MatchAndExecute e n�o s�
+  * o tratamento de excepções, relativamente a Router.MatchAndExecute e não só
 
 5.2) Nao Ficou Feito:
 
-  * melhorar a formata��o da resposta HTTP, para se perceber melhor se existiu algum erro.
+  * acabar App, verificando se nao dá timeout para resultados com conteúdos maiores (ex.: outras pastas sem ser a do NUnit)
+
+  * melhorar a formatação da resposta HTTP, para se perceber melhor se existiu algum erro.
+
+6)  WebReflectorTests.cs
+  * - poucos Testes foram criados, e faltariam muitos mais
