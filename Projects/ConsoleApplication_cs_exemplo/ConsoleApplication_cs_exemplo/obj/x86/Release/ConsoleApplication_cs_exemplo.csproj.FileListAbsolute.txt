@@ -1,0 +1,5 @@
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\ConsoleApplication_cs_exemplo\ConsoleApplication_cs_exemplo\bin\Release\ConsoleApplication_cs_exemplo.exe
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\ConsoleApplication_cs_exemplo\ConsoleApplication_cs_exemplo\bin\Release\ConsoleApplication_cs_exemplo.pdb
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\ConsoleApplication_cs_exemplo\ConsoleApplication_cs_exemplo\obj\x86\Release\ResolveAssemblyReference.cache
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\ConsoleApplication_cs_exemplo\ConsoleApplication_cs_exemplo\obj\x86\Release\ConsoleApplication_cs_exemplo.exe
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\ConsoleApplication_cs_exemplo\ConsoleApplication_cs_exemplo\obj\x86\Release\ConsoleApplication_cs_exemplo.pdb

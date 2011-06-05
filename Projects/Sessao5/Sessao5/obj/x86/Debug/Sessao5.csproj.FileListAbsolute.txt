@@ -1,0 +1,5 @@
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Sessao5\Sessao5\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Sessao5\Sessao5\bin\Debug\Sessao5.exe
+c:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Sessao5\Sessao5\bin\Debug\Sessao5.pdb
+c:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Sessao5\Sessao5\obj\x86\Debug\Sessao5.exe
+c:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Sessao5\Sessao5\obj\x86\Debug\Sessao5.pdb

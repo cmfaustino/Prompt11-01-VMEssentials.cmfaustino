@@ -136,6 +136,7 @@
     .method public hidebysig instance int32 
           CompareTo(class Sessao1.Ponto p1) cil managed
   {
+	//Prompt-11-S1.pdf - 3 f)
 	.maxstack 10
     .locals init (int32 V_0,
              int32 V_1)

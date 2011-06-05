@@ -1,0 +1,5 @@
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Sessao6_aula\Sessao6_aula\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Sessao6_aula\Sessao6_aula\bin\Debug\Sessao6_aula.exe
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Sessao6_aula\Sessao6_aula\bin\Debug\Sessao6_aula.pdb
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Sessao6_aula\Sessao6_aula\obj\x86\Debug\Sessao6_aula.exe
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Sessao6_aula\Sessao6_aula\obj\x86\Debug\Sessao6_aula.pdb

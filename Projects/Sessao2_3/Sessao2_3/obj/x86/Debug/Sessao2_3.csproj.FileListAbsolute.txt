@@ -1,0 +1,5 @@
+c:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Sessao2_3\Sessao2_3\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Sessao2_3\Sessao2_3\bin\Debug\Sessao2_3.exe
+c:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Sessao2_3\Sessao2_3\bin\Debug\Sessao2_3.pdb
+c:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Sessao2_3\Sessao2_3\obj\x86\Debug\Sessao2_3.exe
+c:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Sessao2_3\Sessao2_3\obj\x86\Debug\Sessao2_3.pdb

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sessao6_aula", "Sessao6_aula\Sessao6_aula.csproj", "{44D16275-0F70-4B5C-8F3F-F7E68E68DB33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44D16275-0F70-4B5C-8F3F-F7E68E68DB33}.Debug|x86.ActiveCfg = Debug|x86
+		{44D16275-0F70-4B5C-8F3F-F7E68E68DB33}.Debug|x86.Build.0 = Debug|x86
+		{44D16275-0F70-4B5C-8F3F-F7E68E68DB33}.Release|x86.ActiveCfg = Release|x86
+		{44D16275-0F70-4B5C-8F3F-F7E68E68DB33}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

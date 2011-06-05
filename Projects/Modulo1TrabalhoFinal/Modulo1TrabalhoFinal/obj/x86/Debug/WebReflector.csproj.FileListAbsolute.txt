@@ -1,0 +1,14 @@
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Debug\Modulo1TrabalhoFinal.exe.config
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Debug\Modulo1TrabalhoFinal.exe
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Debug\Modulo1TrabalhoFinal.pdb
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Debug\nunit.framework.dll
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\obj\x86\Debug\Modulo1TrabalhoFinal.exe
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\obj\x86\Debug\Modulo1TrabalhoFinal.pdb
+C:\z_PROMPT\PROMPT\uc01\repos\Prompt11-01-VMEssentials.cmfaustino\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Debug\Modulo1TrabalhoFinal.exe.config
+C:\z_PROMPT\PROMPT\uc01\repos\Prompt11-01-VMEssentials.cmfaustino\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\obj\x86\Debug\Modulo1TrabalhoFinal.exe
+C:\z_PROMPT\PROMPT\uc01\repos\Prompt11-01-VMEssentials.cmfaustino\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\obj\x86\Debug\Modulo1TrabalhoFinal.pdb
+C:\z_PROMPT\PROMPT\uc01\repos\Prompt11-01-VMEssentials.cmfaustino\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Debug\Modulo1TrabalhoFinal.exe
+C:\z_PROMPT\PROMPT\uc01\repos\Prompt11-01-VMEssentials.cmfaustino\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Debug\Modulo1TrabalhoFinal.pdb
+C:\z_PROMPT\PROMPT\uc01\repos\Prompt11-01-VMEssentials.cmfaustino\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Debug\nunit.framework.dll
+C:\z_PROMPT\PROMPT\uc01\repos\Prompt11-01-VMEssentials.cmfaustino\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\obj\x86\Debug\ResolveAssemblyReference.cache

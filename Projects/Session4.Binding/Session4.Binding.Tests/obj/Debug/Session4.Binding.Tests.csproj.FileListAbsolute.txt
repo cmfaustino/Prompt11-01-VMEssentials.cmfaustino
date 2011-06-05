@@ -1,0 +1,8 @@
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Session4.Binding\Session4.Binding.Tests\bin\Debug\Session4.Binding.Tests.dll
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Session4.Binding\Session4.Binding.Tests\bin\Debug\Session4.Binding.Tests.pdb
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Session4.Binding\Session4.Binding.Tests\bin\Debug\nunit.framework.dll
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Session4.Binding\Session4.Binding.Tests\bin\Debug\Session4.Binding.dll
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Session4.Binding\Session4.Binding.Tests\bin\Debug\Session4.Binding.pdb
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Session4.Binding\Session4.Binding.Tests\obj\Debug\ResolveAssemblyReference.cache
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Session4.Binding\Session4.Binding.Tests\obj\Debug\Session4.Binding.Tests.dll
+c:\users\carlosfaustino\documents\visual studio 2010\Projects\Session4.Binding\Session4.Binding.Tests\obj\Debug\Session4.Binding.Tests.pdb
