@@ -1,4 +1,4 @@
-- prazo ate ao final de sabado;
+-- prazo ate ao final de sabado;
 - com relatorio para explicar o que faz cada "coisa" de forma que se entenda;
 
 --//--
