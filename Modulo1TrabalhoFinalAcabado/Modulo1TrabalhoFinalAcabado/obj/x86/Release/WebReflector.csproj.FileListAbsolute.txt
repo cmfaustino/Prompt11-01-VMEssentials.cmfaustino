@@ -1,0 +1,8 @@
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Release\Modulo1TrabalhoFinal.pdb
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Release\nunit.framework.dll
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\obj\x86\Release\Modulo1TrabalhoFinal.pdb
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Release\Modulo1TrabalhoFinal.dll.config
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Release\Modulo1TrabalhoFinal.dll
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\obj\x86\Release\Modulo1TrabalhoFinal.dll
+C:\Users\CarlosFaustino\Documents\Visual Studio 2010\Projects\Modulo1TrabalhoFinal\Modulo1TrabalhoFinal\bin\Release\Modulo1TrabalhoFinal.exe.config

@@ -1,0 +1,290 @@
+﻿- prazo ate ao final de sabado...foi ultrapassado em 2 semanas e 4 dias: em vez de sabado dia 4 junho, foi 4a dia 22 junho;
+- com relatorio para explicar o que faz cada "coisa" de forma que se entenda;
+
+--//--
+
+Faltou fazer, apenas para o geral/essencial:
+
+  1) verificar se os itens fisicos especificados nos uri's existem no disco rigido do servidor, e tratar caso não existam:
+  1.1) directoria raiz
+  1.2) directoria de contexto
+  1.3) ficheiro de assembly
+
+  2) nos handler's que necessitam de parâmetro Type ShortName, não se utilizou o short name, mas o full name
+
+  3) ter em conta a possibilidade de existirem tipos e métodos genéricos, e assim, tratá-los adequadamente
+
+  (4) teste com Router.MatchExecute ?
+
+  (5) acabar App, verificando se nao dá timeout para resultados com conteúdos maiores
+        (ex.: outras pastas sem ser a do NUnit)
+
+  (6) contemplar WebUtility.HtmlEncode em processTagHTML2string, ou na construção de TagHTML ?
+
+  (7) estrutura de cache de Contextos, Assemblies, Namespaces e sua utilizacao nos handler's, exemplo de Prof. Pedro Félix:
+        Contexto -> Namespace -> Nome -> Tipo : Dict< string , Dict< Tuple< string , string > , Type > >
+
+Faltou fazer, apenas para complemento do geral/essencial:
+
+  (8) como acessório, faltariam ser utilizadas tags para comentários de documentação, conforme está no MSDN, em
+        XML Documentation Comments (C# Programming Guide)
+        Delimiters for Documentation Tags (C# Programming Guide)
+        Recommended Tags for Documentation Comments (C# Programming Guide)
+
+--//--
+
+0)  MetodosEstaticos.cs:
+
+  * utilizou-se uma constante NAMESPACE_SPECIAL, para tratar o caso de namespace vazio, isto é, "", como especial em uri's
+
+  * O método auxiliar CheckForCollectionsBothNullsOrWithSameCount(ICollection col1, ICollection col2) compara se 2
+      colecções são ambas null ou têm igual .Count , para auxiliar outros métodos
+
+  * implementou-se um método auxiliar LoadAndGetAssembly para tentar carregar um ficheiro como assembly,
+      com várias hipóteses comentadas
+
+  * Os métodos auxiliares GetAssembliesNamesFromDir e GetAssembliesFromDir destinam-se a povoar listas já inicializadas,
+      e a criar tags html apenas em caso de ocorrer excepção
+
+  * implementou-se um método auxiliar GetFullNameFromType para tentar obter o nome de um Type e tratar possível excepção
+
+  * os 3 métodos IsNestedByCatchingAnyException, DeclaringTypeByCatchingAnyException, GetNestedTypesByCatchingAnyException
+      destinam-se a fazer a operação equivalente já pré-definida na classe Type, mas com qualquer excepção "apanhada"
+      (o método getNestedTypes pré-definido em Type só obtem os nested types que são PÚBLICOs,
+      mas os outros 2 métodos funcionam para casos de types não públicos também)
+
+  * os métodos GetHierarchyFlatListTypes...FromType retornam listas de nestedtypes ou de declarationtypes de um type
+
+  * os métodos GetTypesFrom... destinam-se a obter os tipos definidos em assembly(s), tratando possível excepção ocorrida
+
+  * Implementaram-se varios métodos auxiliares GetNamespaceFrom... , para o caso difícil de tratar os Namespace
+      havendo algum tratamento de excepcoes a nivel interno
+
+      Utilizou-se, como default no disco rígido, a sub-pasta "tools" do "NUnit.2.5.10.11092" (versão utilizada na uc 02 do
+      PROMPT), por ser exemplo de algo com poucos ficheiros, mas que permitiu alguns resultados válidos e outros
+      inválidos... tem sub-pasta/contexto lib... está na directoria "packages" das sources deste repositório
+
+      No entanto, no caso de nunit-gui-runner.dll , o .NET Reflector 6 mostra um namespace NUnit.Gui.SettingsPages
+      e a aplicacao nao mostra este namespace... Em principio, tem que ver com System.ReflectionTypeLoadException
+      Assim, o handler NamespacesContext ficou incompleto ?!
+
+  * Metodo GetPublicKeyStringFromAssembly que obtem a Public Key de um Assembly, desde que haja Public Key Token tambem,
+      atraves de Assembly.GetName().GetPublicKey() , se existir Assembly.GetName().GetPublicKeyToken() , embora existissem
+      alternativas, como executar, em shell (de command prompt), sn.exe -k , para criar par de chaves publica/privada
+
+  * implementaram-se 3 métodos auxiliares GetDictNamespacesTypeFullNamesFromAssembly , AppendDictWithNoDuplicates , e
+      GetDictNamespacesTypeFullNamesFromAssemblies para tratar listas de Namespaces e de nomes dos respectivos Types
+
+  * implementaram-se 2 métodos auxiliares de conversão de namespace IsNameOfNamespaceEmptyThenConvertToSpecial e
+      IsNameOfNamespaceSpecialThenConvertToEmpty para tratar o caso de namespace vazio, isto é, "", como sendo especial
+      em uri's, e assim, existem conversões quando se criam uri's com namespace, e quando se analisam uri's com namespace
+
+  * implementaram-se 2 métodos auxiliares para se obter listas de namespaces e nomes dos respectivos Types
+      GetDictParentNamespacesTypeFullNamesFromNamespace e GetDictSubNamespacesTypeFullNamesFromNamespace , na forma de
+      Dictionary , para serem utilizados quando se trata de analisar (o uri de pedido de dados de) um namespace
+
+1)  Contracts.cs:
+
+1.1) Ficou feito:
+
+  * Contracts consiste, principalmente, num private Dictionary<List<RuleComponent>, IHandler> listRulesHandlers,
+      devido aos conselhos de Prof. Jorge Martins para haver List<RuleComponent> como forma de template
+
+    Dado um template do tipo referido no enunciado, por exemplo, /{ctx}/ns/{namespacePrefix}
+      divide-se o template pela / em componentes de 2 tipos: variáveis (têm chavetas), e constantes caso contrário
+
+    Assim, o template de exemplo acima referido é transformado numa lista constituida por:
+      - vari�vel {ctx} na 1a posicao da List<RuleComponent>
+      - constante ns na 2a posicao da List<RuleComponent>
+      - vari�vel {namespacePrefix} 3a posicao da List<RuleComponent>
+
+    A seguir, é colocado no dicionário, juntamente com o handler respectivo... para cada template, só existe um handler
+
+  * Existem 3 Classes: abstract RuleComponent, RuleVariable, RuleConstant, sendo que as 2 ultimas derivam da 1a classe.
+      A diferença principal entre RuleVariable e RuleConstant está no método MatchString(string s)
+        onde uma variável faz Match com qualquer string, enquanto que RuleConstant tem de ter conteúdo igual a s
+
+  * Existem 2 Métodos Construtores de Contracts, um sem parâmetros e outro para se poderem redefinir 5 campos private;
+
+  * O método auxiliar IsVariable(string s) verifica se s é variável, com base nos 5 campos private de Contracts
+
+  * GenerateRuleComponents cria, a partir da string de template, uma lista de componentes (a ser comparada com o que
+      est� no dicion�rio atrás referido)
+
+  * EqualRules verifica se 2 listas de componentes têm o mesmo conteúdo (de modo a substituir .ContainsKey do Dictionary)
+
+  * RulesContains substitui a funcionalidade de .ContainsKey do Dictionary
+
+  * AddRule utiliza os 3 métodos anteriores para adicionar um template e seu handler ao Dictionary listRulesHandlers
+
+  * MatchRule verifica se é possível fazer match entre uma lista de componentes e uma lista de strings
+
+  * MatchUri aceita uma expressao resultante de pedido HTTP e tenta fazer match com qualquer das regras existentes no
+      Dictionary listRulesHandlers, e se conseguir esse MatchRule, devolve:
+      - o respectivo template (em forma de lista de componentes);
+      - o handler respectivo desse template;
+      - e a expressão concreta do pedido HTTP
+
+  * ResolveUri utiliza MatchUri, e em caso de sucesso, cria um Dictionary<string, string> com os pares (variável,expressão)
+      que será, mais tarde, passado ao respectivo handler como parâmetro de entrada
+
+------
+
+  * Utilizar os 5 campos private de Contracts em todos os m�todos de Contracts, por forma a generalizar o código
+      (afinal, já tinha sido feito, mas tinha sido indicado como não feito)
+
+  * adicionaram-se mais 2 campos private em Contracts para generalizar o código para constantes terem também caracteres
+      de delimitação, à semelhança de { e } para variáveis. Por defeito, continua a não haver caracteres de delimitação
+      no início e fim das constantes, conforme o que está no enunciado.
+
+  * O método auxiliar IsConstant(string s) verifica se s é constante, com base nos extra 2 campos private de Contracts
+
+1.2) Não Ficou Feito:
+
+  * Alterar a estrutura interna de regras e handlers, por forma a generalizar mais o código, inclusivé no sentido de
+      permitir que um Contexto pudesse ter subdirectorias, ie, vários subníveis
+
+      (Contracts_outroModo.cs foi a tentativa inicial de implementar a estrutura de árvore)
+
+  * Em GenerateRuleComponents, caso haja algo que não é variável nem constante, deveria atirar excepção?!
+
+
+2)  Router.cs
+
+2.1) Ficou Feito:
+
+  * classe estática, cujo único método é MatchAndExecute, que, dada uma Contracts e uma string do pedidoHTTP, tenta o
+      ResolveUri em Contracts e, em caso de sucesso, passa o dicionário resultante de parâmetros ao handler retornado,
+      Se tal passagem não for possível, invoca um "handler interno" para tratar/informar a causa do problema
+        (lista de templates nula, ou handler nulo)
+
+  * nada mais há a fazer, pois, tal como indicado nas aulas, o router "pega na árvore de regras" e escolhe o handler
+      em conformidade
+
+3)  Handlers.cs e IHandler.cs --- o trabalho encontra-se incompleto devido à não implementação de todo este ficheiro ---
+
+3.1) Ficou Feito:
+
+  * Utilizou-se, como default no disco rígido, a sub-pasta "tools" do "NUnit.2.5.10.11092" (versão utilizada na uc 02 do
+      PROMPT), por ser exemplo de algo com poucos ficheiros, mas que permitiu alguns resultados válidos e outros
+      inválidos... tem sub-pasta/contexto lib... está na directoria "packages" das sources deste repositório
+
+  * Utilizou-se uma constante para a raíz (relativa) de URL, de modo a generalizar o código para outros casos possíveis
+
+  * Existe classe base, HandlerAnswer, que corresponde à resposta de execução de um IHandler a um dicionário de parâmetros
+
+  * Existe interface base, IHandler, que corresponde à regra para implementar os Handlers... só tem o método Handle
+
+  * Existe 1 excepção definida HandlerException, com vista a capturar o contexto nos sítios onde surgirem erros de execução
+
+  * Existe método "interno" NullsHandler, utilizado por Router, nos casos em que:
+      - a árvore de regras interna da aplicação esteja a null
+      - ou o handler encontrado por Match esteja a null
+
+  * 3 dos 12 handlers implementados: Root , ContextName , e AssembliesContext
+
+------
+
+  * Colocaram-se 3 elementos base Classe HandlerAnswer, Interface IHandler, Classe Excepcao HandlerException em IHandler.cs
+
+  * Prof. Pedro Félix aconselhou ao uso de Type.Namespace para se obter Namespace de Type,
+      de entre os 3 modos verificados de obter Namespaces: Type.Namespace , Type.FullName, e Type.AssemblyQualifiedName
+
+  * Para carregar ficheiro como assembly, optou-se por Assembly.LoadFile(String) , devido a desvantagens dos
+      outros 2 modos verificados de carregar ficheiro como assembly: Assembly.LoadFrom e Assembly.ReflectionOnlyLoadFrom
+      Esta escolha esta traduzida no metodo estatico LoadAndGetAssembly(String)
+
+  * Para obter chave publica de Assembly, optou-se por Assembly.GetName().GetPublicKey() , desde que exista tambem
+      Assembly.GetName().GetPublicKeyToken() , por oposicao a outra hipotese que seria executar, em shell
+      (de command prompt), o utilitário sn.exe -k para criar par de chaves publica/privada
+
+  * restantes 9 dos 12 handlers que ainda nao estavam implementados, pois o desenvolvimento do handler para
+      NamespacesContext empregou lógica que foi também utilizada nos restantes 8 "sub-"handlers, influenciando a sua
+      implementação:
+        NamespacesContext (+/- ver ponto 3.2 a seguir) , AssemblyNameContext ; NamespacePrefixContext ;
+        TypeShortNameNamespaceContext , MethodNameTypeNamespaceContext , ConstructsTypeNamespaceContext ;
+        FieldNameTypeNamespaceContext , PropNameTypeNamespaceContext , EventNameTypeNamespaceContext
+
+      - cada handler que necessite de namespace como parametro vai obter todos os namespaces existentes,
+        a partir de todos tipos de todos os ficheiros do contexto especificado, e verificar se namespace existe;
+      - o mesmo acontece para os parametros type name, e sub-parametros relacionados com type.
+
+3.2) Não Ficou Feito:
+
+  * verificar se itens fisicos especificados nos uri's existem no disco rigido do servidor, e tratar caso não existam:
+      - directoria raiz ; - directoria de contexto ; - ficheiro de assembly
+
+  * a utilização da excepção que foi criada, de propósito, para ser utilizada neste módulo
+
+  * nos handler's que necessitam de parâmetro Type ShortName, não se utilizou o short name, mas o full name, isto é,
+      especifica-se o Namespace e Type FullName, havendo assim uma duplicação de Namespace na especificação de parâmetros
+      (por exemplo: Namespace = NUnit.Core ; Type FullName = NUnit.Core.AssemblyHelper)
+
+  * No caso de nunit-gui-runner.dll , o .NET Reflector 6 mostra um namespace NUnit.Gui.SettingsPages
+      e a aplicacao nao mostra este namespace... Em principio, tem que ver com System.ReflectionTypeLoadException
+      Assim, o handler NamespacesContext ficou incompleto ?!
+
+  * ter em conta a possibilidade de existirem tipos e métodos genéricos, e assim, tratá-los adequadamente
+
+  * estrutura de cache de Contextos, Assemblies, Namespaces e sua utilizacao nos handler's, exemplo de Prof. Pedro Félix:
+      Contexto -> Namespace -> Nome -> Tipo : Dict< string , Dict< Tuple< string , string > , Type > >
+
+3.3) Ficou por Esclarecer:
+
+  * Porventura, teria também de se utilizar Activator.CreateInstance(Type) e verificar se havia excepção(es), e tratá-las?!
+      ( para se distinguir entre o que � N1.C1.C2 e N1.N2.C2 ?! -
+      - ver exemplo - Fully Qualified Names - em secção de VS 2010 help - Using Namespaces (C# Programming Guide) )
+
+4)  Views.cs
+
+4.1) Ficou Feito:
+
+  * Estrutura TagHTML, com campos:
+      - string de tag de início ;
+      - dicion�rio de atributos-valores (a serem colocados dentro da tag de início);
+      - list com as sub-tags que possam constituir conte�do da tag em questão;
+      - string com texto que possa constituir conteúdo da tag em questão;
+      - string de tag de fim de bloco (que pode ser inexistente, em vários casos gen�ricos de HTML e XHTML puro)
+
+  * Alguns métodos de versão limitada para criação de estrutura TagHTML (HTML, HEAD, TITLE, BODY, H1, H3, P, TABLE,
+      TR, TD, e A nas versões âncora e hiperligação)
+
+4.2) Nao Ficou Feito:
+
+  * apenas, perceber se a utilizacao do m�todo: string System.Net.WebUtility.HtmlEncode(string)
+      está bem feita, no método processTagHTML2string, ou se deveria antes ter sido utilizada nos métodos de "construção"
+      HTML, ou seja, HTML, HEAD, etc...
+
+  * método(s) para adicionar mais pares (atributos,valores) a uma TagHTML
+
+  * implementar outras Tags HTML, ou outras vers�es HTML ou XHTML.
+
+5)  WebReflectorApp.cs
+
+5.1) Ficou Feito:
+
+  * aplicação servidora, na sua camada de topo, a funcionar
+      (recebe pedidos no prefixo http://localhost:8080/ e envia resposta)
+
+  * extra enunciado, uma forma de encerrar "suavemente" e "remotamente" a aplicação servidora, com uri-expressão /-
+
+  * o tratamento de excepções, relativamente a Router.MatchAndExecute e não só
+
+------
+
+  * para se poder incluir o tratamento dos tipos com nome a começar em <...>... , por exemplo
+      <PrivateImplementationDetails> definido em log4net.dll com namespace "" , é necessário tratar os caracteres < e >
+      que aparecem no uri como %hexadecimal , e assim, utilizou-se, para todos os pedidos, o método estático
+      System.Uri.UnescapeDataString para aplicar a HttpListenerRequest.RawUrl obtido de cada pedido
+
+
+5.2) Nao Ficou Feito:
+
+  * acabar App, verificando se nao dá timeout para resultados com conteúdos maiores (ex.: outras pastas sem ser a do NUnit)
+
+  * melhorar a formatação da resposta HTTP, também com mais destaque para HTTP STATUS CODE, para se perceber melhor se
+      existiu algum erro.
+
+6)  WebReflectorTests.cs
+  * - poucos Testes foram criados, e faltariam muitos mais, como, por exemplo,
+        testes comprovativos de boa verificação de tipos genéricos
